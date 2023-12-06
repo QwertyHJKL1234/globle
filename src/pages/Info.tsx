@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 
 import { FormattedMessage } from "react-intl";
+import { Link } from "react-router-dom";
 import { LocaleContext } from "../i18n/LocaleContext";
 
 type ItemProps = {
@@ -31,11 +32,7 @@ function Item({ q, a }: ItemProps, idx: number) {
   }
 }
 
-type Props = {
-  setScreen: React.Dispatch<React.SetStateAction<string>>;
-};
-
-export default function Info({ setScreen }: Props) {
+export default function Info() {
   const localeContext = useContext(LocaleContext);
 
   const faqs = [
@@ -56,12 +53,9 @@ export default function Info({ setScreen }: Props) {
             values={{
               button: (chunks: string) => {
                 return (
-                  <button
-                    className="underline"
-                    onClick={(e) => setScreen("Settings")}
-                  >
-                    {chunks}
-                  </button>
+                  <Link to="/settings">
+                    <button className="underline">{chunks}</button>
+                  </Link>
                 );
               },
             }}
@@ -144,22 +138,32 @@ export default function Info({ setScreen }: Props) {
         </dd>
       ),
     },
+    {
+      q: <FormattedMessage id="q8" />,
+      a: (
+        <dd key={2}>
+          <FormattedMessage id="a8" />
+        </dd>
+      ),
+    },
   ];
 
-  // Need to skip question 6 if not English because it doesn't apply.
-  if (localeContext.locale !== "en-CA") {
+  // Need to skip question 6 if not English or French because it doesn't apply.
+  if (localeContext.locale !== "en-CA" && localeContext.locale !== "fr-FR") {
     faqs.splice(5, 1);
   }
 
   return (
-    <div className="my-2 space-y-7">
+    <div className="my-2 space-y-7 dark:text-gray-200">
       <h2
         className="text-center text-2xl my-5 font-extrabold"
         style={{ fontFamily: "'Montserrat'" }}
       >
         <FormattedMessage id="FAQTitle" />
       </h2>
-      <dl className="space-y-8">{faqs.map((faq, idx) => Item(faq, idx))}</dl>
+      <dl className="space-y-8 pb-8">
+        {faqs.map((faq, idx) => Item(faq, idx))}
+      </dl>
     </div>
   );
 }

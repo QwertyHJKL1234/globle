@@ -1,28 +1,35 @@
 import { useContext } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { ThemeContext } from "../context/ThemeContext";
 import { getPath } from "../util/svg";
 
 type Props = {
-  setScreen: React.Dispatch<React.SetStateAction<string>>;
   setReSpin: React.Dispatch<React.SetStateAction<boolean>>;
   setShowStats: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export default function Header({ setScreen, setReSpin, setShowStats }: Props) {
+export default function Header({ setReSpin, setShowStats }: Props) {
   const { theme } = useContext(ThemeContext);
+  const navigate = useNavigate();
+  // Set up practice mode
+  const [params] = useSearchParams();
+  const practiceMode = !!params.get("practice_mode");
 
   function reRenderGlobe() {
     setReSpin(true);
-    setScreen("Game");
+    if (practiceMode) {
+      return navigate("/");
+    }
+    navigate("/game");
   }
 
   const svgColour = theme.nightMode ? "rgb(209 213 219)" : "black";
 
   return (
-    <header className="mt-8 h-10 relative dark:text-gray-300 z-10">
+    <header className="mt-8 h-10 relative dark:text-gray-200 z-10">
       <div className="relative h-full">
         <div className="space-x-1 flex absolute left-0 bottom-1">
-          <button onClick={() => setScreen("Help")} aria-label="Help">
+          <button onClick={() => navigate("/")} aria-label="Help">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               height="24"
@@ -55,7 +62,7 @@ export default function Header({ setScreen, setReSpin, setShowStats }: Props) {
               <path fill={svgColour} d={getPath("stats")}></path>
             </svg>
           </button>
-          <button onClick={() => setScreen("Settings")} aria-label="Settings">
+          <button onClick={() => navigate("/settings")} aria-label="Settings">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               height="24"
@@ -68,6 +75,7 @@ export default function Header({ setScreen, setReSpin, setShowStats }: Props) {
         </div>
       </div>
       <hr className="bottom-0" style={{ borderColor: svgColour }} />
+      {/* <SnackAdUnit unitName="snack_mob_top" siteId="2902"></SnackAdUnit> */}
     </header>
   );
 }

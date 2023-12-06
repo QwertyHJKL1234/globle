@@ -1,5 +1,26 @@
 # Change log
 
+## v1.6.0 - May 31, 2022
+- Added translations for Italian and Polish (thank you international translators!)
+- Added rainbow theme for pride 🏳️‍🌈
+- Increased zoom speed
+- You can now toggle the list of guessed countries between "sort by order of guesses" and "sort by distance"
+- Added switch for miles to km in closest border preview
+- Rounded closest border preview to nearest 10 km/miles due to imprecisions in the game's borders
+- Added (shameful self-promotion) link to [Plurality](https://plurality.fun) to the stats menu
+- Added fallback error message to share score functionality
+- Added alternate names for some French, Spanish, and Portuguese countries
+
+## v1.5.0 - Apr 25, 2022
+- Added Practice mode so players can play unlimited times per day to hone their geography skills without affecting their score
+- Added translations for French, German, and Portuguese (thank you international translators!)
+- Guessing or clicking on small countries now zooms in
+- Removed the check boxes visible in the Settings page on Safari
+- Added routing for the different pages (React Router v6)
+- Added "along the Earth's surface" to FAQ about distance calculation
+- Adjusted borders for Andaman and Nicobar Islands
+- Improved translation methodology to make the code more flexible for future translators (Issue #68)
+
 ## v1.4.0 - Mar 21, 2022
 - Translated game into Spanish
 - Fixed bug that caused the globe not to display on older browsers
